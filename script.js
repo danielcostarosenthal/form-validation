@@ -4,6 +4,9 @@ const username = document.querySelector('#username')
 const email = document.querySelector('#email')
 const password = document.querySelector('#password')
 const passwordConfirmation = document.querySelector('#password2')
+const inputs = document.querySelectorAll('input')
+const message = document.querySelector('#message')
+let isError = true
 
 // Show input error
 const showError = (input, message) => {
@@ -88,14 +91,21 @@ const checkPasswordConfirmation = () => {
 const checkPasswordsMatch = () => {
 	if (password.value !== passwordConfirmation.value) {
 		showError(passwordConfirmation, 'Passwords do not match')
+		isError = true
 	} else {
 		showSuccess(passwordConfirmation)
+		isError = false
 	}
 }
 
 // Clean form
 const clearForm = () => {
-	inputs.forEach((input) => (input.value = ''))
+	message.className = 'message active'
+
+	setTimeout(() => {
+		inputs.forEach((input) => (input.value = ''))
+		message.className = 'message hidden'
+	}, 1500)
 }
 
 // Handle submit
@@ -105,6 +115,9 @@ const handleSubmit = (e) => {
 	checkEmail()
 	checkPassword()
 	checkPasswordConfirmation()
+	if (!isError) {
+		clearForm()
+	}
 }
 
 username.addEventListener('input', checkUsername)
