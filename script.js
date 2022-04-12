@@ -9,11 +9,13 @@ const message = document.querySelector('#message')
 let isError = true
 
 // Show input error
-const showError = (input, message) => {
+const showError = (input, error) => {
 	const formControl = input.parentElement
 	formControl.className = 'form-control error'
 	const small = formControl.querySelector('small')
-	small.innerText = message
+	small.innerText = error
+	message.className = 'message active'
+	message.innerText = error
 }
 
 // Show input success
@@ -22,6 +24,8 @@ const showSuccess = (input) => {
 	formControl.className = 'form-control success'
 	const small = formControl.querySelector('small')
 	small.innerText = ''
+	message.className = 'message hidden'
+	message.innerText = ''
 }
 
 // Check username
@@ -101,9 +105,15 @@ const checkPasswordsMatch = () => {
 // Clean form
 const clearForm = () => {
 	message.className = 'message active'
+	message.innerText = 'Form submitted!'
 
 	setTimeout(() => {
-		inputs.forEach((input) => (input.value = ''))
+		inputs.forEach((input) => {
+			input.parentElement.className = 'form-control'
+			input.value = ''
+			input.blur()
+			isError = true
+		})
 		message.className = 'message hidden'
 	}, 1500)
 }
@@ -111,10 +121,10 @@ const clearForm = () => {
 // Handle submit
 const handleSubmit = (e) => {
 	e.preventDefault()
-	checkUsername()
-	checkEmail()
-	checkPassword()
 	checkPasswordConfirmation()
+	checkPassword()
+	checkEmail()
+	checkUsername()
 	if (!isError) {
 		clearForm()
 	}
