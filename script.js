@@ -42,6 +42,7 @@ const checkUsername = () => {
 	} else {
 		showSuccess(username)
 	}
+	message.style.display = 'none'
 }
 
 // Check email
@@ -50,45 +51,56 @@ const checkEmail = () => {
 		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 	if (email.value === '') {
 		showError(email, 'Email is required')
+		email.focus()
 	} else if (!regex.test(email.value)) {
 		showError(email, 'Email is not valid')
+		email.focus()
 	} else {
 		showSuccess(email)
 	}
+	message.style.display = 'none'
 }
 
 // Check password
 const checkPassword = () => {
 	if (password.value === '') {
 		showError(password, 'Password is required')
+		password.focus()
 	} else if (password.value.length < 6) {
 		showError(password, 'Password must be at least 6 characters')
+		password.focus()
 	} else if (password.value.length > 25) {
 		showError(password, 'Password must be less than 25 characters')
+		password.focus()
 	} else {
 		showSuccess(password)
 		checkPasswordsMatch()
 	}
+	message.style.display = 'none'
 }
 
 // Check password confirmation
 const checkPasswordConfirmation = () => {
 	if (passwordConfirmation.value === '') {
 		showError(passwordConfirmation, 'Password confirmation is required')
+		passwordConfirmation.focus()
 	} else if (passwordConfirmation.value.length < 6) {
 		showError(
 			passwordConfirmation,
 			'Password confirmation must be at least 6 characters'
 		)
+		passwordConfirmation.focus()
 	} else if (passwordConfirmation.value.length > 25) {
 		showError(
 			passwordConfirmation,
 			'Password confirmation must be less than 25 characters'
 		)
+		passwordConfirmation.focus()
 	} else {
 		showSuccess(passwordConfirmation)
 		checkPasswordsMatch()
 	}
+	message.style.display = 'none'
 }
 
 // Check passwords match
@@ -100,6 +112,7 @@ const checkPasswordsMatch = () => {
 		showSuccess(passwordConfirmation)
 		isError = false
 	}
+	message.style.display = 'none'
 }
 
 // Clean form
@@ -116,6 +129,7 @@ const clearForm = () => {
 		})
 		message.className = 'message hidden'
 	}, 1500)
+	message.style.display = 'block'
 }
 
 // Handle submit
@@ -130,6 +144,7 @@ const handleSubmit = (e) => {
 	}
 }
 
+// Event listeners
 username.addEventListener('input', checkUsername)
 email.addEventListener('input', checkEmail)
 password.addEventListener('input', checkPassword)
